@@ -296,7 +296,17 @@ export default function EducationDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <CorrelationChart data={filteredData} />
+                <CorrelationChart
+                  data={filteredData.map(province => ({
+                    name: province.name,
+                    povertyRate: province.povertySum,
+                    dropoutRate: province.dropoutRate,
+                    kipkPerCapita:
+                      province.students && province.students > 0
+                        ? province.kipkRecipients / province.students
+                        : 0,
+                  }))}
+                />
               </CardContent>
             </Card>
           </TabsContent>

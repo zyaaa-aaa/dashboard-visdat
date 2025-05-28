@@ -5,7 +5,7 @@ import { ChartContainer, ChartTooltip } from "@/components/ui/chart"
 
 interface CorrelationData {
   name: string
-  povertyRate: number
+  povertySum: number
   dropoutRate: number
   kipkPerCapita: number
 }
@@ -33,7 +33,7 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart data={scatterData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="povertyRate" name="Tingkat Kemiskinan (%)" fontSize={12} />
+          <XAxis dataKey="povertySum" name="Jumlah Penduduk Miskin" fontSize={12} />
           <YAxis dataKey="dropoutRate" name="Tingkat Putus Kuliah (%)" fontSize={12} />
           <ZAxis dataKey="size" range={[50, 400]} />
           <ChartTooltip
@@ -43,7 +43,7 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
                 return (
                   <div className="bg-white p-3 border rounded-lg shadow-lg">
                     <p className="font-semibold">{data.name}</p>
-                    <p className="text-sm">Kemiskinan: {data.povertyRate.toFixed(1)}%</p>
+                    <p className="text-sm">Kemiskinan: {data.povertySum}</p>
                     <p className="text-sm">Putus Kuliah: {data.dropoutRate.toFixed(1)}%</p>
                     <p className="text-sm">KIP-K per Kapita: {data.kipkPerCapita.toFixed(1)}%</p>
                   </div>

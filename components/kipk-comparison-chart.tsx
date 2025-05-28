@@ -11,12 +11,12 @@ export function KipkComparisonChart() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h4 className="font-semibold mb-4 text-red-700">4 Provinsi Termiskin (%)</h4>
+          <h4 className="font-semibold mb-4 text-red-700">4 Provinsi Termiskin</h4>
           <div className="space-y-2">
             {poorestProvinces.map((province, index) => (
               <div key={province.name} className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
                 <span className="text-sm font-medium">{province.name}</span>
-                <span className="text-sm font-bold text-red-700">{province.povertyRate}%</span>
+                <span className="text-sm font-bold text-red-700">{province.povertySum}</span>
               </div>
             ))}
           </div>
@@ -35,13 +35,10 @@ export function KipkComparisonChart() {
         </div>
       </div>
 
-      <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-        <h4 className="font-semibold text-yellow-800 mb-2">⚠️ Analisis Ketidaksesuaian</h4>
-        <p className="text-yellow-700 text-sm">
-          Terdapat ketidaksesuaian antara provinsi termiskin dengan provinsi penerima KIP-K terbanyak. Provinsi
-          termiskin (Papua, Papua Barat, NTT, Maluku) tidak masuk dalam daftar penerima KIP-K terbanyak, sementara
-          provinsi dengan tingkat kemiskinan relatif rendah (Jawa Barat, Jawa Timur, Jawa Tengah) justru menerima
-          bantuan KIP-K terbanyak.
+      <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+        <h4 className="font-semibold text-green-80 mb-2">✅ Analisis Kesesuaian</h4>
+        <p className="text-green-700 text-sm">
+          Dari kedua data di atas terlihat bahwa pemerintah sudah cukup efektif dalam menargetkan provinsi dengan jumlah penduduk miskin terbanyak sebagai penerima bantuan KIP-K. Namun, fakta bahwa angka putus kuliah tetap tinggi menunjukkan bahwa bantuan finansial saja belum cukup.
         </p>
       </div>
     </div>

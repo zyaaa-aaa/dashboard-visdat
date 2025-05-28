@@ -7,7 +7,7 @@ interface Province {
   name: string
   dropoutRate: number
   students: number
-  povertyRate: number
+  povertySum: number
 }
 
 interface DropoutRateTableProps {
@@ -31,8 +31,8 @@ export function DropoutRateTable({ data }: DropoutRateTableProps) {
             <TableHead>Provinsi</TableHead>
             <TableHead className="text-right">Putus Kuliah (%)</TableHead>
             <TableHead className="text-right">Total Mahasiswa</TableHead>
-            <TableHead className="text-right">Tingkat Kemiskinan (%)</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="text-right"> Jumlah Penduduk Miskin</TableHead>
+            {/* <TableHead>Status</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,8 +41,8 @@ export function DropoutRateTable({ data }: DropoutRateTableProps) {
               <TableCell className="font-medium">{province.name}</TableCell>
               <TableCell className="text-right font-mono">{province.dropoutRate.toFixed(1)}%</TableCell>
               <TableCell className="text-right">{province.students.toLocaleString("id-ID")}</TableCell>
-              <TableCell className="text-right font-mono">{province.povertyRate.toFixed(1)}%</TableCell>
-              <TableCell>{getDropoutBadge(province.dropoutRate)}</TableCell>
+              <TableCell className="text-right font-mono">{province.povertySum}</TableCell>
+              {/* <TableCell>{getDropoutBadge(province.dropoutRate)}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

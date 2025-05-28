@@ -6,7 +6,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 interface Province {
   name: string
   dropoutRate: number
-  povertyRate: number
+  povertySum: number
 }
 
 interface ProvincePovertyChartProps {
@@ -23,8 +23,8 @@ export function ProvincePovertyChart({ data }: ProvincePovertyChartProps) {
           label: "Tingkat Putus Kuliah (%)",
           color: "hsl(var(--chart-1))",
         },
-        povertyRate: {
-          label: "Tingkat Kemiskinan (%)",
+        povertySum: {
+          label: "Jumlah Penduduk Miskin",
           color: "hsl(var(--chart-2))",
         },
       }}

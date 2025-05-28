@@ -1,7 +1,7 @@
 "use client"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
+// import { Badge } from "@/components/ui/badge"
 
 interface Province {
   name: string
@@ -17,11 +17,11 @@ interface DropoutRateTableProps {
 export function DropoutRateTable({ data }: DropoutRateTableProps) {
   const sortedData = [...data].sort((a, b) => b.dropoutRate - a.dropoutRate)
 
-  const getDropoutBadge = (rate: number) => {
-    if (rate >= 10) return <Badge variant="destructive">Tinggi</Badge>
-    if (rate >= 7) return <Badge variant="secondary">Sedang</Badge>
-    return <Badge variant="default">Rendah</Badge>
-  }
+  // const getDropoutBadge = (rate: number) => {
+  //   if (rate >= 10) return <Badge variant="destructive">Tinggi</Badge>
+  //   if (rate >= 7) return <Badge variant="secondary">Sedang</Badge>
+  //   return <Badge variant="default">Rendah</Badge>
+  // }
 
   return (
     <div className="max-h-[400px] overflow-y-auto">

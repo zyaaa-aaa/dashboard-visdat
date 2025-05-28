@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { educationIncomeData } from "@/data/dummy-data"
+import { educationIncomeData } from "@/data/data"
 
 export function EducationIncomeChart() {
   return (

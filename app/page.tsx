@@ -12,12 +12,12 @@ import { DropoutRateTable } from "@/components/dropout-rate-table"
 import { ProvincePovertyChart } from "@/components/province-poverty-chart"
 import { KipkDistributionChart } from "@/components/kipk-distribution-chart"
 import { CorrelationChart } from "@/components/correlation-chart"
-import { provinceData } from "@/data/dummy-data"
+import { provinceData } from "@/data/data"
 import { GraduationCap, TrendingUp, Users, BarChart3, PieChart } from "lucide-react"
 
 export default function EducationDashboard() {
   const [selectedProvince, setSelectedProvince] = useState<string>("all")
-  const [dropoutRangeFilter, setDropoutRangeFilter] = useState([0, 20])
+  const [dropoutRangeFilter, setDropoutRangeFilter] = useState([0, 15])
   const [activeTab, setActiveTab] = useState("overview")
 
   const filteredData = provinceData.filter((province) => {
@@ -244,7 +244,7 @@ export default function EducationDashboard() {
               <Card>
                 <CardHeader>
                   <CardTitle>Tabel Detail Tingkat Putus Kuliah</CardTitle>
-                  <CardDescription>Data lengkap tingkat putus kuliah per provinsi</CardDescription>
+                  <CardDescription>Data lengkap tingkat putus kuliah per provinsi (terurut berdasarkan angka putus kuliah)</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <DropoutRateTable data={filteredData} />
@@ -299,7 +299,7 @@ export default function EducationDashboard() {
                 <CorrelationChart
                   data={filteredData.map(province => ({
                     name: province.name,
-                    povertyRate: province.povertySum,
+                    povertySum: province.povertySum,
                     dropoutRate: province.dropoutRate,
                     kipkPerCapita:
                       province.students && province.students > 0

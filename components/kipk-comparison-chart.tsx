@@ -1,11 +1,12 @@
 "use client"
-import { poorestProvinces, topKipkProvinces } from "@/data/dummy-data"
+import { poorestProvinces, topKipkProvinces } from "@/data/data"
 
 export function KipkComparisonChart() {
-  const comparisonData = [
-    { category: "Provinsi Termiskin", papua: 27.8, papbar: 23.1, ntt: 21.3, maluku: 18.2 },
-    { category: "Penerima KIP-K Terbanyak (ribu)", jabar: 28.9, jatim: 25.6, jateng: 22.4, sumut: 18.7 },
-  ]
+  // Unused variable
+  // const comparisonData = [
+  //   { category: "Provinsi Termiskin", papua: 27.8, papbar: 23.1, ntt: 21.3, maluku: 18.2 },
+  //   { category: "Penerima KIP-K Terbanyak (ribu)", jabar: 28.9, jatim: 25.6, jateng: 22.4, sumut: 18.7 },
+  // ]
 
   return (
     <div className="space-y-6">
@@ -13,7 +14,7 @@ export function KipkComparisonChart() {
         <div>
           <h4 className="font-semibold mb-4 text-red-700">4 Provinsi Termiskin</h4>
           <div className="space-y-2">
-            {poorestProvinces.map((province, index) => (
+            {poorestProvinces.map((province) => (
               <div key={province.name} className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
                 <span className="text-sm font-medium">{province.name}</span>
                 <span className="text-sm font-bold text-red-700">{province.povertySum}</span>
@@ -25,10 +26,10 @@ export function KipkComparisonChart() {
         <div>
           <h4 className="font-semibold mb-4 text-blue-700">4 Provinsi Penerima KIP-K Terbanyak</h4>
           <div className="space-y-2">
-            {topKipkProvinces.map((province, index) => (
+            {topKipkProvinces.map((province) => (
               <div key={province.name} className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
                 <span className="text-sm font-medium">{province.name}</span>
-                <span className="text-sm font-bold text-blue-700">{province.recipients.toLocaleString("id-ID")}</span>
+                <span className="text-sm font-bold text-blue-700">{(province.recipients ?? 0).toLocaleString("id-ID")}</span>
               </div>
             ))}
           </div>

@@ -92,7 +92,7 @@ export default function EducationDashboard() {
                 <Slider
                   value={dropoutRangeFilter}
                   onValueChange={setDropoutRangeFilter}
-                  max={20}
+                  max={15}
                   min={0}
                   step={0.5}
                   className="w-full"

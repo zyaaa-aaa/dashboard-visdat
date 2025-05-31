@@ -314,6 +314,12 @@ export default function EducationDashboard() {
                           province.kipkRecipients
                       }))}
                     />
+                    <div className="mt-4 p-4 bg-orange-50 rounded-lg">
+                      <h4 className="font-semibold text-orange-900 mb-2">📌 Insight Distribusi KIP-K</h4>
+                      <p className="text-orange-800 text-sm">
+                        Rasio KIP-K per kapita tinggi tidak selalu identik dengan tingginya putus kuliah. Contohnya, Jawa Barat memiliki tingkat penerima KIP-K yang sangat tinggi namun angka putus kuliahnya justru rendah. Hal ini menunjukkan bahwa faktor <strong>non-finansial</strong> seperti kesiapan akademik dan dukungan sosial juga berperan penting dalam keberhasilan studi mahasiswa.
+                      </p>
+                    </div>
                     </CardContent>
                   </Card>
 
@@ -366,11 +372,11 @@ export default function EducationDashboard() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600">•</span>
-                    Jawa Timur dan Jawa Barat memiliki tingkat putus kuliah dan kemiskinan tertinggi
+                    Papua Barat memiliki tingkat putus kuliah tertinggi.
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600">•</span>
-                    Distribusi KIP-K sudah cukup namun belum sepenuhnya sesuai dengan tingkat kemiskinan daerah. 
+                    Jawa Timur dan Jawa Barat memiliki kemiskinan tertinggi dan penerima KIP-K terbanyak, hal ini menandakan upaya pemerintah di faktor ekonomi. 
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600">•</span>
@@ -384,7 +390,7 @@ export default function EducationDashboard() {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-green-600">•</span>
-                    Pemerintah memastikan bahwa KIP-K benar-benar untuk mahasiswa dari keluarga tidak mampu.
+                    Pemerintah perlu memastikan bahwa KIP-K benar-benar untuk mahasiswa dari keluarga tidak mampu.
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600">•</span>

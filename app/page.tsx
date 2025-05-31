@@ -15,7 +15,12 @@ import { ExpandableKipkAnalysis } from "@/components/expandable"
 import { CorrelationChart } from "@/components/correlation-chart"
 import { provinceData } from "@/data/data"
 import { GraduationCap, TrendingUp, Users, BarChart3, PieChart } from "lucide-react"
-import DropoutRateMap from "@/components/dropout-rate-map"
+import dynamic from 'next/dynamic';
+
+// Dynamically import DropoutRateMap with SSR disabled
+const DropoutRateMap = dynamic(() => import('../components/dropout-rate-map'), {
+  ssr: false 
+});
 
 export default function EducationDashboard() {
   const [selectedProvince, setSelectedProvince] = useState<string>("all")
@@ -65,12 +70,12 @@ export default function EducationDashboard() {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
+
+      <div className="flex flex-col max-w-360 mx-24 lg:px-8 py-4 gap-8">
+        <div className="bg-white p-6 rounded-lg shadow-md w-full">
           <h2 className="text-xl font-semibold mb-4">Peta Persebaran</h2>
           <DropoutRateMap />
         </div>
-
-      <div className="max-w-360 mx-auto lg:px-8 py-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Left Column - Filters and Key Metrics */}
           <div className="lg:col-span-3 space-y-2">
@@ -363,7 +368,7 @@ export default function EducationDashboard() {
         </div>
 
         {/* Conclusions - Full Width */}
-        <Card className="mt-8">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-xl">Kesimpulan dan Rekomendasi</CardTitle>
           </CardHeader>

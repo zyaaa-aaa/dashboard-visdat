@@ -14,7 +14,7 @@ interface ProvincePovertyChartProps {
 }
 
 export function ProvincePovertyChart({ data }: ProvincePovertyChartProps) {
-  const sortedData = [...data].sort((a, b) => b.dropoutRate - a.dropoutRate).slice(0, 10) // Show top 10 provinces with highest dropout rates
+  const sortedData = [...data].sort((a, b) => b.dropoutRate - a.dropoutRate).slice(0, 10)
 
   return (
     <ChartContainer
@@ -28,18 +28,38 @@ export function ProvincePovertyChart({ data }: ProvincePovertyChartProps) {
           color: "hsl(var(--chart-2))",
         },
       }}
-      className="h-[300px]"
+      className="h-[230px] w-full"
     >
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={sortedData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <BarChart 
+          data={sortedData} 
+          margin={{ 
+            top: 15, 
+            right: 15, 
+            left: 15, 
+            bottom: 70 
+          }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} fontSize={10} />
-          <YAxis fontSize={12} />
+          <XAxis 
+            dataKey="name" 
+            angle={-45} 
+            textAnchor="end" 
+            height={20}
+            fontSize={10}
+            interval={0}
+            tick={{ fontSize: 10 }}
+          />
+          <YAxis 
+            fontSize={10}
+            tick={{ fontSize: 10 }}
+            width={40}
+          />
           <ChartTooltip content={<ChartTooltipContent />} />
           <Bar
             dataKey="dropoutRate"
             fill="var(--color-dropoutRate)"
-            radius={[4, 4, 0, 0]}
+            radius={[2, 2, 0, 0]}
             name="Tingkat Putus Kuliah (%)"
           />
         </BarChart>

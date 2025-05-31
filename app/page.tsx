@@ -15,6 +15,7 @@ import { ExpandableKipkAnalysis } from "@/components/expandable"
 import { CorrelationChart } from "@/components/correlation-chart"
 import { provinceData } from "@/data/data"
 import { GraduationCap, TrendingUp, Users, BarChart3, PieChart } from "lucide-react"
+import DropoutRateMap from "@/components/dropout-rate-map"
 
 export default function EducationDashboard() {
   const [selectedProvince, setSelectedProvince] = useState<string>("all")
@@ -63,6 +64,11 @@ export default function EducationDashboard() {
           </div>
         </div>
       </div>
+
+      <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Peta Persebaran</h2>
+          <DropoutRateMap />
+        </div>
 
       <div className="max-w-360 mx-auto lg:px-8 py-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">

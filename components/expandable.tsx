@@ -11,13 +11,13 @@ export function ExpandableKipkAnalysis() {
     <div className="space-y-4">
       {/* Clickable Header */}
       <div 
-        className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-3 rounded-lg transition-colors"
+        className=" bg-green-100 border border-green-200 flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-3 rounded-lg transition-colors"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {isExpanded ? (
           <ChevronDown className="h-5 w-5 text-gray-600" />
         ) : (
-          <ChevronRight className="h-5 w-5 text-gray-600" />
+          <ChevronDown className="h-5 w-5 text-gray-600" />
         )}
         <h3 className="text-lg font-semibold text-gray-900">
           Analisis Efektivitas KIP-K

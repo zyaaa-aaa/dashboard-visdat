@@ -4,7 +4,10 @@ import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { educationIncomeData } from "@/data/data"
 
-export function EducationIncomeChart() {
+export function EducationIncomeChart2() {
+  // Reverse the data so Universitas appears at top
+  const reversedData = [...educationIncomeData].reverse()
+
   return (
     <ChartContainer
       config={{
@@ -13,33 +16,31 @@ export function EducationIncomeChart() {
           color: "hsl(var(--chart-1))",
         },
       }}
-      className="h-[230px] w-full"
+      className="h-[440px] w-full"
     >
       <ResponsiveContainer width="100%" height="100%">
         <BarChart 
-          data={educationIncomeData} 
+          data={reversedData} 
+          layout="vertical"
           margin={{ 
             top: 15, 
-            right: 15, 
-            left: 15, 
-            bottom: 70 
+            right: 30,  
+            bottom: 15 
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis 
-            dataKey="education" 
-            angle={-45} 
-            textAnchor="end" 
-            height={20}
+            type="number"
+            tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
             fontSize={10}
-            interval={0}
             tick={{ fontSize: 10 }}
           />
           <YAxis 
-            tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`} 
+            type="category"
+            dataKey="education" 
             fontSize={10}
             tick={{ fontSize: 10 }}
-            width={40}
+            width={100}
           />
           <ChartTooltip
             content={<ChartTooltipContent />}
@@ -48,7 +49,7 @@ export function EducationIncomeChart() {
           <Bar 
             dataKey="income" 
             fill="var(--color-income)" 
-            radius={[4, 4, 0, 0]} 
+            radius={[0, 4, 4, 0]} 
           />
         </BarChart>
       </ResponsiveContainer>

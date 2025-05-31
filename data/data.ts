@@ -67,13 +67,13 @@ export const provinceData: ProvinceData[] = [
 
 // Data pendapatan berdasarkan pendidikan (dalam rupiah per bulan)
 export const educationIncomeData: EducationIncomeData[] = [
-  { education: "Tidak/Belum Pernah Sekolah", income: 1576789, level: 1 },
-  { education: "Tidak/Belum Tamat SD", income: 1764950, level: 2 },
-  { education: "Sekolah Dasar", income: 2107108, level: 3 },
-  { education: "Sekolah Menengah Pertama", income: 2341855, level: 4 },
-  { education: "Sekolah Menengah Atas (Umum)", income: 2975103, level: 5 },
-  { education: "Sekolah Menengah Atas (Kejuruan)", income: 3028328, level: 6 },
-  { education: "Diploma I/II/III/Akademi", income: 4145294, level: 7 },
+  { education: "Tidak Sekolah", income: 1576789, level: 1 },
+  { education: "Tidak Tamat SD", income: 1764950, level: 2 },
+  { education: "SD", income: 2107108, level: 3 },
+  { education: "SMP", income: 2341855, level: 4 },
+  { education: "SMA", income: 2975103, level: 5 },
+  { education: "SMK", income: 3028328, level: 6 },
+  { education: "Diploma", income: 4145294, level: 7 },
   { education: "Universitas", income: 4780244, level: 8 }
 ];
 

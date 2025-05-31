@@ -47,12 +47,11 @@ export default function EducationDashboard() {
                 Dashboard Analisis Pendidikan Indonesia
               </h1>
               <p className="text-gray-600 mt-2">
-                Analisis kontribusi pendidikan terhadap pendapatan ekonomi dan evaluasi efektivitas distribusi bantuan
-                KIP-K
+                Evaluasi Efektivitas Distribusi Bantuan Pendidikan (KIP-K) Berdasarkan Angka Putus Kuliah dan Tingkat Kemiskinan di Indonesia.
               </p>
             </div>
             <Badge variant="outline" className="text-sm">
-              Data Tahun 2024
+              Data Tahun 2022
             </Badge>
           </div>
         </div>
@@ -132,7 +131,7 @@ export default function EducationDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Rata-rata Putus Kuliah</p>
+                  <p className="text-sm font-medium text-gray-600">Persentase Putus Kuliah</p>
                   <p className="text-2xl font-bold text-orange-600">{avgDropoutRate.toFixed(1)}%</p>
                 </div>
                 <PieChart className="h-8 w-8 text-orange-600" />
@@ -328,11 +327,15 @@ export default function EducationDashboard() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600">•</span>
-                    Papua dan Papua Barat memiliki tingkat putus kuliah dan kemiskinan tertinggi
+                    Jawa Timur dan Jawa Barat memiliki tingkat putus kuliah dan kemiskinan tertinggi
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600">•</span>
-                    Distribusi KIP-K belum sepenuhnya sesuai dengan tingkat kemiskinan daerah
+                    Distribusi KIP-K sudah cukup namun belum sepenuhnya sesuai dengan tingkat kemiskinan daerah. 
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-600">•</span>
+                    Tingkat putus kuliah yang tinggi di daerah yang lebih mampu mungkin disebabkan oleh hal lain selain ekonomi.
                   </li>
                 </ul>
               </div>
@@ -342,15 +345,15 @@ export default function EducationDashboard() {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-green-600">•</span>
-                    Realokasi KIP-K lebih fokus ke provinsi dengan tingkat kemiskinan tinggi
+                    Pemerintah memastikan bahwa KIP-K benar-benar untuk mahasiswa dari keluarga tidak mampu.
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600">•</span>
-                    Program pendampingan khusus untuk daerah dengan dropout rate tinggi
+                    Deteksi dini mahasiswa yang beresiko. Berikan bimbingan terutama di provinsi dengan tingkat putus kuliah tertinggi.
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600">•</span>
-                    Peningkatan infrastruktur pendidikan di wilayah timur Indonesia
+                    Penanganan angka putus kuliah harus melibatkan Pemerintah Pusat, Daerah, Kampus, dan Komunitas.
                   </li>
                 </ul>
               </div>

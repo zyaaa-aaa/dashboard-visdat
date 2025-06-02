@@ -7,6 +7,43 @@ export interface ProvinceData {
   students: number;
 }
 
+export const provinceMapping = {
+  "aceh": "DI. ACEH",
+  "bali": "BALI", 
+  "babel": "BANGKA BELITUNG",
+  "banten": "PROBANTEN", 
+  "bengkulu": "BENGKULU",
+  "yogya": "DAERAH ISTIMEWA YOGYAKARTA",
+  "jakarta": "DKI JAKARTA", 
+  "gorontalo": "GORONTALO",
+  "jambi": "JAMBI",
+  "jabar": "JAWA BARAT",
+  "jateng": "JAWA TENGAH", 
+  "jatim": "JAWA TIMUR",
+  "kalbar": "KALIMANTAN BARAT",
+  "kalsel": "KALIMANTAN SELATAN",
+  "kalteng": "KALIMANTAN TENGAH",
+  "kaltim": "KALIMANTAN TIMUR", 
+  "kalut": "KALIMANTAN UTARA", 
+  "kepri": "KEPULAUAN RIAU", 
+  "lampung": "LAMPUNG",
+  "maluku": "MALUKU",
+  "malut": "MALUKU UTARA", 
+  "ntb": "NUSATENGGARA BARAT",
+  "ntt": "NUSA TENGGARA TIMUR",
+  "papua": "IRIAN JAYA TIMUR", 
+  "papbar": "IRIAN JAYA BARAT",   
+  "riau": "RIAU",
+  "sulbar": "SULAWESI BARAT",
+  "sulsel": "SULAWESI SELATAN",
+  "sulteng": "SULAWESI TENGAH", 
+  "sultengg": "SULAWESI TENGGARA",
+  "sulut": "SULAWESI UTARA",
+  "sumbar": "SUMATERA BARAT",
+  "sumsel": "SUMATERA SELATAN", 
+  "sumut": "SUMATERA UTARA"
+};
+
 export interface EducationIncomeData {
   education: string;
   income: number;

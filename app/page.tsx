@@ -82,7 +82,7 @@ export default function EducationDashboard() {
       </div>
 
 
-      <div className="flex flex-col max-w-360 mx-24 lg:px-8 py-4 gap-8">
+      <div className="flex flex-col max-w-360 mx-auto lg:px-8 py-4 gap-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-fit">
           {/* Left Column - Filters and Key Metrics */}
           <div className="lg:col-span-3 space-y-2 h-full">

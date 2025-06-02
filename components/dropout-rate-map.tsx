@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import { indoGeoJson, provinceData } from "../data/data";
+import { indoGeoJson, provinceData, provinceMapping } from "../data/data";
 
 // Fix untuk icon Leaflet di Next.js
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -31,6 +31,22 @@ function MapUpdater({ center, zoom }: MapUpdaterProps) {
   }, [center, zoom, map]);
   return null;
 }
+
+const getProvinceData = (geojsonProvinceName) => {
+  // Cari berdasarkan mapping
+  const dataId = Object.keys(provinceMapping).find(
+    key => provinceMapping[key] === geojsonProvinceName
+  );
+  
+  if (dataId) {
+    return provinceData.find(p => p.id === dataId);
+  }
+  
+  // Fallback: cari berdasarkan nama langsung
+  return provinceData.find(p => 
+    p.name.toLowerCase() === geojsonProvinceName.toLowerCase()
+  );
+};
 
 // TODO: resolve all of the type issues
 const DropoutRateMap = () => {
@@ -172,29 +188,38 @@ const DropoutRateMap = () => {
 
   const onEachFeature = (feature, layer) => {
     const provinceName = feature.properties.Propinsi;
-    const dropoutRate = feature.properties.dropoutRate || 0;
-    const povertySum = feature.properties.povertySum || 0;
-    const kipkRecipients = feature.properties.kipkRecipients || 0;
-    const students = feature.properties.students || 0;
-
-    layer.bindTooltip(
-      `<div style="min-width: 200px">
-      <strong>${provinceName}</strong><br/>
-      Dropout Rate: <b>${dropoutRate.toFixed(2)}%</b><br/>
-      Jumlah Penduduk Miskin: <b>${povertySum.toLocaleString()}</b><br/>
-      Penerima KIPK: <b>${kipkRecipients.toLocaleString()}</b><br/>
-      Jumlah Siswa: <b>${students.toLocaleString()}</b>
-      </div>`,
-      { permanent: false, sticky: true }
-    );
-
-    layer.on({
-      mouseover: highlightFeature,
-      mouseout: resetHighlight,
-      click: () => {
-        setSelectedProvince(feature);
-      },
-    });
+    const provinceData = getProvinceData(provinceName);
+    
+    if (provinceData) {
+      const color = getColor(provinceData.dropoutRate);
+      layer.setStyle({
+        fillColor: color,
+        fillOpacity: 0.7,
+        color: '#000',
+        weight: 1
+      });
+      
+      // Tooltip
+      layer.bindTooltip(`
+        <strong>${provinceData.name}</strong><br/>
+        Tingkat Putus Kuliah: ${provinceData.dropoutRate}%<br/>
+        Mahasiswa: ${provinceData.students.toLocaleString()}<br/>
+        Penerima KIP-K: ${provinceData.kipkRecipients.toLocaleString()}
+      `);
+    } else {
+      // Style default untuk provinsi yang tidak ada datanya
+      layer.setStyle({
+        fillColor: '#cccccc',
+        fillOpacity: 0.5,
+        color: '#000', 
+        weight: 1
+      });
+      
+      layer.bindTooltip(`
+        <strong>${provinceName}</strong><br/>
+        <em>Data tidak tersedia</em>
+      `);
+    }
   };
 
   if (loading) {

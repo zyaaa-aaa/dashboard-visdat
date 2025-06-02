@@ -18,6 +18,21 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow.src,
 });
 
+// Types
+type ProvinceDataType = typeof provinceData[number];
+
+// Simplified types - lebih fleksibel untuk menangani berbagai struktur GeoJSON
+type GeoJSONFeature = {
+  type: "Feature";
+  geometry: unknown; // Fleksibel untuk semua jenis geometry
+  properties: Record<string, unknown>;
+};
+
+type GeoJSONData = {
+  type: "FeatureCollection";
+  features: GeoJSONFeature[];
+};
+
 // Komponen untuk mengupdate map ketika data berubah
 type MapUpdaterProps = {
   center: [number, number];
@@ -32,10 +47,10 @@ function MapUpdater({ center, zoom }: MapUpdaterProps) {
   return null;
 }
 
-const getProvinceData = (geojsonProvinceName) => {
+const getProvinceData = (geojsonProvinceName: string): ProvinceDataType | undefined => {
   // Cari berdasarkan mapping
   const dataId = Object.keys(provinceMapping).find(
-    key => provinceMapping[key] === geojsonProvinceName
+    key => provinceMapping[key as keyof typeof provinceMapping] === geojsonProvinceName
   );
   
   if (dataId) {
@@ -48,33 +63,33 @@ const getProvinceData = (geojsonProvinceName) => {
   );
 };
 
-// TODO: resolve all of the type issues
 const DropoutRateMap = () => {
-  const [geoData, setGeoData] = useState<any>(null);
+  const [geoData, setGeoData] = useState<GeoJSONData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedMetric, setSelectedMetric] = useState("dropoutRate");
-  const [selectedProvince, setSelectedProvince] = useState(null);
-
-  // Membuat mapping dari nama provinsi ke data
-  const provinceDataMap = provinceData.reduce<
-    Record<string, (typeof provinceData)[number]>
-  >((acc, province) => {
-    acc[province.name.toLowerCase()] = province;
-    return acc;
-  }, {});
+  const [selectedProvince, setSelectedProvince] = useState<ProvinceDataType | null>(null);
 
   useEffect(() => {
     const fetchGeoData = async () => {
       try {
+        // Membuat mapping dari nama provinsi ke data
+        const provinceDataMap = provinceData.reduce<
+          Record<string, ProvinceDataType>
+        >((acc, province) => {
+          acc[province.name.toLowerCase()] = province;
+          return acc;
+        }, {});
+
         // GeoJSON untuk provinsi Indonesia
         const data = indoGeoJson;
 
         // Match antara GeoJSON dan data kita
-        const matchedFeatures = data.features.map((feature) => {
-          const provinceName = feature.properties.Propinsi;
+        const matchedFeatures: GeoJSONFeature[] = data.features.map((feature): GeoJSONFeature => {
+          const provinceName = feature.properties.Propinsi as string;
           const matchedData = provinceDataMap[provinceName.toLowerCase()] || {};
           return {
-            ...feature,
+            type: "Feature",
+            geometry: feature.geometry,
             properties: {
               ...feature.properties,
               ...matchedData,
@@ -83,7 +98,7 @@ const DropoutRateMap = () => {
         });
 
         setGeoData({
-          ...data,
+          type: "FeatureCollection",
           features: matchedFeatures,
         });
       } catch (error) {
@@ -168,6 +183,7 @@ const DropoutRateMap = () => {
       fillOpacity: 0.7,
     };
   };
+
 
   const onEachFeature = (feature, layer) => {
     const provinceName = feature.properties.Propinsi;

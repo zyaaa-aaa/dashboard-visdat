@@ -246,7 +246,7 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
                   name="KIP-K" 
                   fontSize={12}
                   domain={visibleDomain.y}
-                  label={{ value: 'Jumlah Penerima KIP-K', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: '12px', fill: '#666' } }}
+                  label={{ value: 'Jumlah Penerima KIP-K', angle: -90, position: 'insideLeft', offset: -10, style: { textAnchor: 'middle', fontSize: '12px', fill: '#666' } }}
                   tickFormatter={(value) => `${value.toFixed(1)}`}
                 />
                 <ZAxis dataKey="size" range={[40, 300]} />
@@ -256,7 +256,7 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload
                       return (
-                        <div className="bg-white p-3 border rounded-lg shadow-lg max-w-xs">
+                        <div className="bg-background p-3 border rounded-lg shadow-lg max-w-xs">
                           <p className="font-semibold text-sm">{data.name}</p>
                           <div className="text-xs space-y-1 mt-2">
                             <p>Penduduk Miskin: {data.povertySum.toLocaleString()}</p>
@@ -271,9 +271,9 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
                 />
                 <Scatter 
                   dataKey="kipk" 
-                  fill="var(--color-kipk)" 
+                  fill="var(--color-warning)" 
                   fillOpacity={0.7}
-                  stroke="var(--color-kipk)"
+                  stroke="var(--color-warning)"
                   strokeWidth={1}
                   isAnimationActive={false}
                   animationDuration={0}
@@ -284,7 +284,7 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
         </div>
         
         {/* Overlay instructions */}
-        <div className="absolute top-2 right-2 bg-black/70 text-white text-xs p-2 rounded pointer-events-none max-w-48">
+        <div className="absolute top-2 right-2 bg-muted-foreground/50 text-background text-xs p-2 rounded pointer-events-none max-w-48">
           <div>• Ukuran Bubble: Tingkat Putus Kuliah</div>
         </div>
       </div>

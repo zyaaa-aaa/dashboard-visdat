@@ -196,7 +196,7 @@ const DropoutRateMap = () => {
   }
 
   return (
-    <div className="relative h-[600px] w-full rounded-lg overflow-hidden shadow-lg">
+    <div className="relative h-full w-full rounded-lg overflow-hidden">
       <MapContainer
         center={[-2.5489, 118.0149]}
         zoom={5}

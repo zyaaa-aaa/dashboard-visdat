@@ -6,9 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { EducationIncomeChart } from "@/components/education-income-chart"
 import { EducationIncomeChart2 } from "@/components/education-income-chart2"
-import { KipkComparisonChart } from "@/components/kipk-comparison-chart"
 import { DropoutRateTable } from "@/components/dropout-rate-table"
 import { ProvincePovertyChart } from "@/components/province-poverty-chart"
 import { ExpandableKipkAnalysis } from "@/components/expandable"
@@ -72,10 +70,6 @@ export default function EducationDashboard() {
 
 
       <div className="flex flex-col max-w-360 mx-24 lg:px-8 py-4 gap-8">
-        <div className="bg-white p-6 rounded-lg shadow-md w-full">
-          <h2 className="text-xl font-semibold mb-4">Peta Persebaran</h2>
-          <DropoutRateMap />
-        </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Left Column - Filters and Key Metrics */}
           <div className="lg:col-span-3 space-y-2">
@@ -211,33 +205,26 @@ export default function EducationDashboard() {
               </TabsList>
 
               <TabsContent value="overview" className="space-y-2">
-                <div className="grid grid-cols-1 gap-2">
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Tingkat Putus Kuliah per Provinsi</CardTitle>
-                        <CardDescription>Data menunjukkan variasi tingkat putus kuliah di seluruh Indonesia</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <ProvincePovertyChart data={filteredData} />
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Hubungan Pendidikan dan Pendapatan</CardTitle>
-                        <CardDescription>Semakin tinggi pendidikan, semakin besar potensi pendapatan</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <EducationIncomeChart />
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-
                 <Card>
+                  <CardHeader>
+                    <CardTitle>Peta Persebaran</CardTitle>
+                    <CardDescription>Visualisasi data persebaran tingkat putus sekolah</CardDescription>
+                  </CardHeader>
                   <CardContent>
-                    <KipkComparisonChart />
+                    <div className="h-[440px] w-full relative">
+                      {/* Loading fallback */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-50 rounded">
+                        <div className="text-center">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                          <p className="text-sm text-gray-600">Memuat peta...</p>
+                        </div>
+                      </div>
+                      
+                      {/* Render map hanya jika tab overview aktif */}
+                      {activeTab === "overview" && (
+                        <DropoutRateMap />
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -325,10 +312,9 @@ export default function EducationDashboard() {
                           province.kipkRecipients
                       }))}
                     />
-                    <div className="mt-4 p-4 bg-orange-50 rounded-lg">
-                      <h4 className="font-semibold text-orange-900 mb-2">📌 Insight Distribusi KIP-K</h4>
+                    <div className="px-4 py-2 bg-orange-50 rounded-lg">
                       <p className="text-orange-800 text-sm">
-                        Rasio KIP-K per kapita tinggi tidak selalu identik dengan tingginya putus kuliah. Contohnya, Jawa Barat memiliki tingkat penerima KIP-K yang sangat tinggi namun angka putus kuliahnya justru rendah. Hal ini menunjukkan bahwa faktor <strong>non-finansial</strong> seperti kesiapan akademik dan dukungan sosial juga berperan penting dalam keberhasilan studi mahasiswa.
+                        Rasio KIP-K per kapita tinggi tidak selalu identik dengan tingginya putus kuliah. Hal ini menunjukkan bahwa faktor <strong>non-finansial</strong> seperti kesiapan akademik dan dukungan sosial juga berperan penting dalam keberhasilan studi mahasiswa.
                       </p>
                     </div>
                     </CardContent>

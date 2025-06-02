@@ -84,42 +84,56 @@ const DropoutRateMap = () => {
   const getColor = (value: number) => {
     if (selectedMetric === "dropoutRate") {
       return value > 8
-        ? "#800026"
+        ? "#881011"
         : value > 6
-        ? "#BD0026"
+        ? "#B61516"
         : value > 4
         ? "#E31A1C"
         : value > 3
-        ? "#FC4E2A"
+        ? "#E94849"
         : value > 2
-        ? "#FD8D3C"
-        : "#FEB24C";
+        ? "#EE7677"
+        : "#F4A3A4";
     } else if (selectedMetric === "povertySum") {
       return value > 3000000
-        ? "#800026"
+        ? "#881011"
         : value > 1000000
-        ? "#BD0026"
+        ? "#B61516"
         : value > 500000
         ? "#E31A1C"
         : value > 200000
-        ? "#FC4E2A"
+        ? "#E94849"
         : value > 100000
-        ? "#FD8D3C"
-        : "#FEB24C";
-    } else {
+        ? "#EE7677"
+        : "#F4A3A4";
+    } else if (selectedMetric === "kipkRecipients") {
       // kipkRecipients
       return value > 50000
-        ? "#800026"
+        ? "#20964B"
         : value > 20000
-        ? "#BD0026"
+        ? "#28BC5E"
         : value > 10000
-        ? "#E31A1C"
+        ? "#53C97E"
         : value > 5000
-        ? "#FC4E2A"
+        ? "#7ED79E"
         : value > 2000
-        ? "#FD8D3C"
-        : "#FEB24C";
-    }
+        ? "#A9E4BF"
+        : "#BFEBCF";
+    } else if (selectedMetric === "students") {
+    // Pewarnaan untuk jumlah mahasiswa
+    return value > 1000000
+      ? "#005BAA"
+      : value > 500000
+      ? "#0072D5"
+      : value > 200000
+      ? "#338EDD"
+      : value > 100000
+      ? "#66AAE6"
+      : value > 50000
+      ? "#99C7EE"
+      : "#B3D5F2";
+  }
+  return "#ccc";
   };
 
   // Style untuk GeoJSON
@@ -144,7 +158,7 @@ const DropoutRateMap = () => {
     const layer = e.target;
     layer.setStyle({
       weight: 3,
-      color: "#666",
+      color: "#FFF",
       dashArray: "",
       fillOpacity: 0.7,
     });
@@ -189,14 +203,14 @@ const DropoutRateMap = () => {
 
   if (!geoData) {
     return (
-      <div className="text-center py-10 text-red-500">
+      <div className="text-center py-10 text-negative">
         Gagal memuat data peta.
       </div>
     );
   }
 
   return (
-    <div className="relative h-[600px] w-full rounded-lg overflow-hidden shadow-lg">
+    <div className="relative h-full w-full rounded-lg overflow-hidden">
       <MapContainer
         center={[-2.5489, 118.0149]}
         zoom={5}
@@ -214,11 +228,11 @@ const DropoutRateMap = () => {
             onEachFeature={onEachFeature}
           />
         )}
-        <MapUpdater center={[-2.5489, 118.0149]} zoom={5} />
+        <MapUpdater center={[-2.5489, 118.0149]} zoom={4} />
       </MapContainer>
 
       {/* Kontrol untuk memilih metrik */}
-      <div className="absolute bottom-4 left-4 z-[1000] bg-white p-3 rounded-lg shadow-md">
+      <div className="absolute bottom-4 left-4 z-[1000] bg-background/60 p-3 rounded-lg shadow-md">
         <h3 className="font-bold mb-2">Pilih Metrik:</h3>
         <div className="flex flex-col space-y-2">
           <label className="flex items-center space-x-2 cursor-pointer">
@@ -227,9 +241,19 @@ const DropoutRateMap = () => {
               name="metric"
               checked={selectedMetric === "dropoutRate"}
               onChange={() => setSelectedMetric("dropoutRate")}
-              className="text-blue-500"
+              className="text-muted-foreground"
             />
             <span>Tingkat Dropout (%)</span>
+          </label>
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input
+              type="radio"
+              name="metric"
+              checked={selectedMetric === "students"}
+              onChange={() => setSelectedMetric("students")}
+              className="text-blue-500"
+            />
+            <span>Jumlah Mahasiswa</span>
           </label>
           <label className="flex items-center space-x-2  cursor-pointer">
             <input
@@ -255,7 +279,7 @@ const DropoutRateMap = () => {
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 right-4 z-[1000] bg-white p-3 rounded-lg shadow-md">
+      <div className="absolute bottom-4 right-4 z-[1000] bg-background p-3 rounded-lg shadow-md">
         <h3 className="font-bold mb-2">Legenda</h3>
         {selectedMetric === "dropoutRate" && (
           <div className="flex flex-col space-y-1">
@@ -265,6 +289,30 @@ const DropoutRateMap = () => {
                   className="w-4 h-4 mr-2"
                   style={{
                     backgroundColor: getColor([9, 7, 5, 3.5, 2.5, 1][i]),
+                  }}
+                />
+                <span className="text-sm">{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {selectedMetric === "students" && (
+          <div className="flex flex-col space-y-1">
+            {[
+              ">1jt",
+              "500rb-1jt",
+              "200-500rb",
+              "100-200rb",
+              "50-100rb",
+              "<50rb",
+            ].map((label, i) => (
+              <div key={label} className="flex items-center">
+                <div
+                  className="w-4 h-4 mr-2"
+                  style={{
+                    backgroundColor: getColor(
+                      [1200000, 700000, 300000, 150000, 70000, 20000][i]
+                    ),
                   }}
                 />
                 <span className="text-sm">{label}</span>
@@ -319,7 +367,7 @@ const DropoutRateMap = () => {
 
       {/* Info Provinsi Terpilih */}
       {selectedProvince && (
-        <div className="flex flex-col gap-3 absolute top-4 right-4 z-[1000] bg-white p-4 rounded-lg shadow-md max-w-xs">
+        <div className="flex flex-col gap-3 absolute top-4 right-4 z-[1000] bg-background p-4 rounded-lg shadow-md max-w-xs">
           <h3 className="font-bold text-lg">
             {selectedProvince.properties.Propinsi}
           </h3>

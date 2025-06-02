@@ -31,9 +31,10 @@ export function EducationIncomeChart2() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis 
             type="number"
-            tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
+            tickFormatter={(value) => `${(value / 1000000).toFixed(1)}`}
             fontSize={10}
             tick={{ fontSize: 10 }}
+            label={{ value: 'Rata-rata Gaji (Jutaan Rp)', position: 'insideBottom', offset: -10, style: { textAnchor: 'middle', fontSize: '12px', fill: '#666' } }}
           />
           <YAxis 
             type="category"
@@ -41,14 +42,15 @@ export function EducationIncomeChart2() {
             fontSize={10}
             tick={{ fontSize: 10 }}
             width={100}
+            label={{ value: 'Tingkat Pendidikan', angle: -90, position: 'insideLeft', offset: 17, style: { textAnchor: 'middle', fontSize: '12px', fill: '#666' } }}
           />
           <ChartTooltip
             content={<ChartTooltipContent />}
-            formatter={(value: number) => [`Rp ${value.toLocaleString("id-ID")}`, "Rata-rata Gaji"]}
+            formatter={(value: number) => [`Rp ${value.toLocaleString("id-ID")}`]}
           />
           <Bar 
             dataKey="income" 
-            fill="var(--color-income)" 
+            fill="var(--color-primary)" 
             radius={[0, 4, 4, 0]} 
           />
         </BarChart>

@@ -169,23 +169,6 @@ const DropoutRateMap = () => {
     };
   };
 
-  // Event handlers untuk interaktivitas
-  const highlightFeature = (e) => {
-    const layer = e.target;
-    layer.setStyle({
-      weight: 3,
-      color: "#FFF",
-      dashArray: "",
-      fillOpacity: 0.7,
-    });
-    layer.bringToFront();
-  };
-
-  const resetHighlight = (e) => {
-    const layer = e.target;
-    layer.setStyle(styleFeature(layer.feature));
-  };
-
   const onEachFeature = (feature, layer) => {
     const provinceName = feature.properties.Propinsi;
     const provinceData = getProvinceData(provinceName);

@@ -203,7 +203,7 @@ export function CorrelationChart({ data }: CorrelationChartProps) {
       <div className="relative">
         <div 
           ref={chartRef}
-          className={`w-full h-[350px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          className={`w-full h-[352px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}

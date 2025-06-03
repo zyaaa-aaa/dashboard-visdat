@@ -57,7 +57,7 @@ export function DropoutRateTable({ data }: DropoutRateTableProps) {
   }
 
   return (
-    <div className="h-[420px] overflow-y-auto">
+    <div className="h-[440px] overflow-y-auto">
       <Table>
         <TableHeader>
           <TableRow>

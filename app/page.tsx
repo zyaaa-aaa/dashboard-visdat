@@ -84,129 +84,7 @@ export default function EducationDashboard() {
 
       <div className="flex flex-col max-w-360 mx-auto lg:px-8 py-4 gap-2">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-fit">
-          {/* Left Column - Filters and Key Metrics */}
-          <div className="lg:col-span-3 space-y-2 h-full">
-            {/* Filters */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-base font-semibold">
-                  <BarChart3 className="h-5 w-5" />
-                  Filter Data
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Filter Provinsi */}
-                <div className="flex items-center gap-4">
-                  <label htmlFor="province" className="text-sm font-medium min-w-[120px]">
-                    Pilih Provinsi
-                  </label>
-                  <div className="flex-1">
-                    <Select value={selectedProvince} onValueChange={setSelectedProvince}>
-                      <SelectTrigger id="province" className="w-full cursor-pointer">
-                        <SelectValue placeholder="Pilih Provinsi" className="" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Semua Provinsi</SelectItem>
-                        {provinceData.map((province) => (
-                          <SelectItem key={province.id} value={province.id}>
-                            {province.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                {/* Filter Tingkat Putus Kuliah */}
-                <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    Filter Tingkat Putus Kuliah: {dropoutRangeFilter[0]}% - {dropoutRangeFilter[1]}%
-                  </label>
-                  <Slider
-                    value={dropoutRangeFilter}
-                    onValueChange={setDropoutRangeFilter}
-                    max={10}
-                    min={0}
-                    step={0.5}
-                    className="w-full"
-                  />
-                </div>
-
-                {/* Filter Tingkat Kemiskinan */}
-                <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    Filter Jumlah Penduduk Miskin: {(povertyRangeFilter[0] / 1000).toFixed(0)}K - {(povertyRangeFilter[1] / 1000).toFixed(0)}K
-                  </label>
-                  <Slider
-                    value={povertyRangeFilter}
-                    onValueChange={setPovertyRangeFilter}
-                    max={maxPoverty}
-                    min={minPoverty}
-                    step={50000}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                    <span>{(minPoverty / 1000).toFixed(0)}K</span>
-                    <span>{(maxPoverty / 1000).toFixed(0)}K</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Key Metrics */}
-            <div className="space-y-2" >
-              <Card className="py-3">
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Total Mahasiswa</p>
-                      <p className="text-xl font-bold text-primary">{totalStudents.toLocaleString("id-ID")}</p>
-                    </div>
-                    <Users className="h-6 w-6 text-primary" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="py-3">
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Putus Kuliah</p>
-                      <p className="text-xl font-bold text-negative">{Math.round(totalDropouts).toLocaleString("id-ID")}</p>
-                    </div>
-                    <ArrowBigDown className="h-6 w-6 text-negative" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="py-3">
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Persentase Putus Kuliah</p>
-                      <p className="text-xl font-bold text-negative">{avgDropoutRate.toFixed(1)}%</p>
-                    </div>
-                    <PieChart className="h-6 w-6 text-negative" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="py-3">
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Penerima KIP-K</p>
-                      <p className="text-xl font-bold text-positive">{totalKipkRecipients.toLocaleString("id-ID")}</p>
-                    </div>
-                    <GraduationCap className="h-6 w-6 text-positive" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-          </div>
-
-          {/* Right Column - Main Content */}
+          {/* Left Column - Main Content */}
           <div className="lg:col-span-9 h-full">
             <Tabs value={activeTab} onValueChange={handleTabChange}>
               <TabsList className="grid w-full grid-cols-4">
@@ -363,6 +241,128 @@ export default function EducationDashboard() {
                 </Card>
               </TabsContent> */}
             </Tabs>
+          </div>
+
+          {/* Right Column - Filters and Key Metrics */}
+          <div className="lg:col-span-3 space-y-2 h-full">
+            {/* Filters */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base font-semibold">
+                  <BarChart3 className="h-5 w-5" />
+                  Filter Data
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Filter Provinsi */}
+                <div className="flex items-center gap-4">
+                  <label htmlFor="province" className="text-sm font-medium min-w-[120px]">
+                    Pilih Provinsi
+                  </label>
+                  <div className="flex-1">
+                    <Select value={selectedProvince} onValueChange={setSelectedProvince}>
+                      <SelectTrigger id="province" className="w-full cursor-pointer">
+                        <SelectValue placeholder="Pilih Provinsi" className="" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Semua Provinsi</SelectItem>
+                        {provinceData.map((province) => (
+                          <SelectItem key={province.id} value={province.id}>
+                            {province.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Filter Tingkat Putus Kuliah */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    Filter Tingkat Putus Kuliah: {dropoutRangeFilter[0]}% - {dropoutRangeFilter[1]}%
+                  </label>
+                  <Slider
+                    value={dropoutRangeFilter}
+                    onValueChange={setDropoutRangeFilter}
+                    max={10}
+                    min={0}
+                    step={0.5}
+                    className="w-full"
+                  />
+                </div>
+
+                {/* Filter Tingkat Kemiskinan */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    Filter Jumlah Penduduk Miskin: {(povertyRangeFilter[0] / 1000).toFixed(0)}K - {(povertyRangeFilter[1] / 1000).toFixed(0)}K
+                  </label>
+                  <Slider
+                    value={povertyRangeFilter}
+                    onValueChange={setPovertyRangeFilter}
+                    max={maxPoverty}
+                    min={minPoverty}
+                    step={50000}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                    <span>{(minPoverty / 1000).toFixed(0)}K</span>
+                    <span>{(maxPoverty / 1000).toFixed(0)}K</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Key Metrics */}
+            <div className="space-y-2" >
+              <Card className="py-3">
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Total Mahasiswa</p>
+                      <p className="text-xl font-bold text-primary">{totalStudents.toLocaleString("id-ID")}</p>
+                    </div>
+                    <Users className="h-6 w-6 text-primary" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="py-3">
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Putus Kuliah</p>
+                      <p className="text-xl font-bold text-negative">{Math.round(totalDropouts).toLocaleString("id-ID")}</p>
+                    </div>
+                    <ArrowBigDown className="h-6 w-6 text-negative" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="py-3">
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Persentase Putus Kuliah</p>
+                      <p className="text-xl font-bold text-negative">{avgDropoutRate.toFixed(1)}%</p>
+                    </div>
+                    <PieChart className="h-6 w-6 text-negative" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="py-3">
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Penerima KIP-K</p>
+                      <p className="text-xl font-bold text-positive">{totalKipkRecipients.toLocaleString("id-ID")}</p>
+                    </div>
+                    <GraduationCap className="h-6 w-6 text-positive" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
           </div>
         </div>
 

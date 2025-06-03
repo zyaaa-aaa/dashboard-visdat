@@ -21,16 +21,33 @@ L.Icon.Default.mergeOptions({
 // Types
 type ProvinceDataType = typeof provinceData[number];
 
-// Simplified types - lebih fleksibel untuk menangani berbagai struktur GeoJSON
+// Improved GeoJSON types - using proper GeoJSON geometry types
+type GeoJSONGeometry = {
+  type: string;
+  coordinates: number[] | number[][] | number[][][] | number[][][][];
+};
+
 type GeoJSONFeature = {
   type: "Feature";
-  geometry: unknown; // Fleksibel untuk semua jenis geometry
-  properties: Record<string, unknown>;
+  geometry: GeoJSONGeometry | null;
+  properties: Record<string, string | number | boolean | null>;
 };
 
 type GeoJSONData = {
   type: "FeatureCollection";
   features: GeoJSONFeature[];
+};
+
+// Enhanced province data type with all properties
+type EnhancedProvinceData = ProvinceDataType & {
+  properties: {
+    Propinsi: string;
+    dropoutRate?: number;
+    povertySum?: number;
+    kipkRecipients?: number;
+    students?: number;
+    [key: string]: string | number | boolean | null | undefined;
+  };
 };
 
 // Komponen untuk mengupdate map ketika data berubah
@@ -66,8 +83,8 @@ const getProvinceData = (geojsonProvinceName: string): ProvinceDataType | undefi
 const DropoutRateMap = () => {
   const [geoData, setGeoData] = useState<GeoJSONData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedMetric, setSelectedMetric] = useState("dropoutRate");
-  const [selectedProvince, setSelectedProvince] = useState<ProvinceDataType | null>(null);
+  const [selectedMetric, setSelectedMetric] = useState<"dropoutRate" | "povertySum" | "kipkRecipients" | "students">("dropoutRate");
+  const [selectedProvince, setSelectedProvince] = useState<EnhancedProvinceData | null>(null);
 
   useEffect(() => {
     const fetchGeoData = async () => {
@@ -112,7 +129,7 @@ const DropoutRateMap = () => {
   }, []);
 
   // Fungsi untuk menentukan warna berdasarkan nilai
-  const getColor = (value: number) => {
+  const getColor = (value: number): string => {
     if (selectedMetric === "dropoutRate") {
       return value > 8
         ? "#881011"
@@ -151,25 +168,37 @@ const DropoutRateMap = () => {
         ? "#A9E4BF"
         : "#BFEBCF";
     } else if (selectedMetric === "students") {
-    // Pewarnaan untuk jumlah mahasiswa
-    return value > 1000000
-      ? "#005BAA"
-      : value > 500000
-      ? "#0072D5"
-      : value > 200000
-      ? "#338EDD"
-      : value > 100000
-      ? "#66AAE6"
-      : value > 50000
-      ? "#99C7EE"
-      : "#B3D5F2";
-  }
-  return "#ccc";
+      // Pewarnaan untuk jumlah mahasiswa
+      return value > 1000000
+        ? "#005BAA"
+        : value > 500000
+        ? "#0072D5"
+        : value > 200000
+        ? "#338EDD"
+        : value > 100000
+        ? "#66AAE6"
+        : value > 50000
+        ? "#99C7EE"
+        : "#B3D5F2";
+    }
+    return "#ccc";
   };
 
-  // Style untuk GeoJSON
-  const styleFeature = (feature) => {
-    const value = feature.properties[selectedMetric] || 0;
+  // Style untuk GeoJSON - using any due to React Leaflet's flexible feature types
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const styleFeature = (feature?: any) => {
+    if (!feature || !feature.properties) return {};
+    
+    // Debug: log untuk melihat data yang digunakan
+    const provinceName = feature.properties.Propinsi;
+    const provinceDataItem = getProvinceData(provinceName);
+    
+    // Gunakan data dari provinceDataItem, bukan dari feature.properties[selectedMetric]
+    const value = provinceDataItem ? provinceDataItem[selectedMetric] || 0 : 0;
+    
+    // Debug log
+    console.log(`${provinceName}: ${selectedMetric} = ${value}`);
+    
     const isSelected =
       selectedProvince &&
       selectedProvince.properties.Propinsi === feature.properties.Propinsi;
@@ -184,40 +213,69 @@ const DropoutRateMap = () => {
     };
   };
 
-
-  const onEachFeature = (feature, layer) => {
-    const provinceName = feature.properties.Propinsi;
-    const provinceData = getProvinceData(provinceName);
+  // Properly typed onEachFeature function - using any due to React Leaflet's flexible feature types
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onEachFeature = (feature: any, layer: L.Layer) => {
+    const provinceName = feature.properties?.Propinsi as string;
+    if (!provinceName) return;
     
-    if (provinceData) {
-      const color = getColor(provinceData.dropoutRate);
-      layer.setStyle({
-        fillColor: color,
-        fillOpacity: 0.7,
-        color: '#000',
-        weight: 1
-      });
+    const provinceDataItem = getProvinceData(provinceName);
+    
+    if (provinceDataItem) {
+      const color = getColor(provinceDataItem.dropoutRate);
       
-      // Tooltip
-      layer.bindTooltip(`
-        <strong>${provinceData.name}</strong><br/>
-        Tingkat Putus Kuliah: ${provinceData.dropoutRate}%<br/>
-        Mahasiswa: ${provinceData.students.toLocaleString()}<br/>
-        Penerima KIP-K: ${provinceData.kipkRecipients.toLocaleString()}
-      `);
+      // Type guard to ensure layer has setStyle method
+      if ('setStyle' in layer && typeof layer.setStyle === 'function') {
+        layer.setStyle({
+          fillColor: color,
+          fillOpacity: 0.7,
+          color: '#000',
+          weight: 1
+        });
+      }
+      
+      // Type guard for bindTooltip
+      if ('bindTooltip' in layer && typeof layer.bindTooltip === 'function') {
+        layer.bindTooltip(`
+          <strong>${provinceDataItem.name}</strong><br/>
+          Tingkat Putus Kuliah: ${provinceDataItem.dropoutRate}%<br/>
+          Mahasiswa: ${provinceDataItem.students.toLocaleString()}<br/>
+          Penerima KIP-K: ${provinceDataItem.kipkRecipients.toLocaleString()}
+        `);
+      }
+
+      // Add click event for province selection
+      if ('on' in layer && typeof layer.on === 'function') {
+        layer.on('click', () => {
+          setSelectedProvince({
+            ...provinceDataItem,
+            properties: {
+              Propinsi: provinceName,
+              dropoutRate: provinceDataItem.dropoutRate,
+              povertySum: provinceDataItem.povertySum,
+              kipkRecipients: provinceDataItem.kipkRecipients,
+              students: provinceDataItem.students,
+            }
+          });
+        });
+      }
     } else {
       // Style default untuk provinsi yang tidak ada datanya
-      layer.setStyle({
-        fillColor: '#cccccc',
-        fillOpacity: 0.5,
-        color: '#000', 
-        weight: 1
-      });
+      if ('setStyle' in layer && typeof layer.setStyle === 'function') {
+        layer.setStyle({
+          fillColor: '#cccccc',
+          fillOpacity: 0.5,
+          color: '#000', 
+          weight: 1
+        });
+      }
       
-      layer.bindTooltip(`
-        <strong>${provinceName}</strong><br/>
-        <em>Data tidak tersedia</em>
-      `);
+      if ('bindTooltip' in layer && typeof layer.bindTooltip === 'function') {
+        layer.bindTooltip(`
+          <strong>${provinceName}</strong><br/>
+          <em>Data tidak tersedia</em>
+        `);
+      }
     }
   };
 
@@ -279,7 +337,7 @@ const DropoutRateMap = () => {
             />
             <span>Jumlah Mahasiswa</span>
           </label>
-          <label className="flex items-center space-x-2  cursor-pointer">
+          <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="radio"
               name="metric"
@@ -424,13 +482,13 @@ const DropoutRateMap = () => {
               </span>
             </p>
           </div>
-            <Button
+          <Button
             onClick={() => setSelectedProvince(null)}
             variant={"default"}
             style={{ cursor: "pointer" }}
-            >
+          >
             Tutup
-            </Button>
+          </Button>
         </div>
       )}
     </div>

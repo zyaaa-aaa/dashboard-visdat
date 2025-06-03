@@ -21,7 +21,6 @@ L.Icon.Default.mergeOptions({
 // Types
 type ProvinceDataType = typeof provinceData[number];
 
-// Improved GeoJSON types - using proper GeoJSON geometry types
 type GeoJSONGeometry = {
   type: string;
   coordinates: number[] | number[][] | number[][][] | number[][][][];
@@ -38,7 +37,6 @@ type GeoJSONData = {
   features: GeoJSONFeature[];
 };
 
-// Enhanced province data type with all properties
 type EnhancedProvinceData = ProvinceDataType & {
   properties: {
     Propinsi: string;
@@ -184,19 +182,15 @@ const DropoutRateMap = () => {
     return "#ccc";
   };
 
-  // Style untuk GeoJSON - using any due to React Leaflet's flexible feature types
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const styleFeature = (feature?: any) => {
     if (!feature || !feature.properties) return {};
     
-    // Debug: log untuk melihat data yang digunakan
     const provinceName = feature.properties.Propinsi;
     const provinceDataItem = getProvinceData(provinceName);
     
-    // Gunakan data dari provinceDataItem, bukan dari feature.properties[selectedMetric]
     const value = provinceDataItem ? provinceDataItem[selectedMetric] || 0 : 0;
     
-    // Debug log
     console.log(`${provinceName}: ${selectedMetric} = ${value}`);
     
     const isSelected =
@@ -213,7 +207,6 @@ const DropoutRateMap = () => {
     };
   };
 
-  // Properly typed onEachFeature function - using any due to React Leaflet's flexible feature types
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onEachFeature = (feature: any, layer: L.Layer) => {
     const provinceName = feature.properties?.Propinsi as string;
@@ -224,7 +217,6 @@ const DropoutRateMap = () => {
     if (provinceDataItem) {
       const color = getColor(provinceDataItem.dropoutRate);
       
-      // Type guard to ensure layer has setStyle method
       if ('setStyle' in layer && typeof layer.setStyle === 'function') {
         layer.setStyle({
           fillColor: color,
@@ -234,7 +226,6 @@ const DropoutRateMap = () => {
         });
       }
       
-      // Type guard for bindTooltip
       if ('bindTooltip' in layer && typeof layer.bindTooltip === 'function') {
         layer.bindTooltip(`
           <strong>${provinceDataItem.name}</strong><br/>
@@ -244,7 +235,6 @@ const DropoutRateMap = () => {
         `);
       }
 
-      // Add click event for province selection
       if ('on' in layer && typeof layer.on === 'function') {
         layer.on('click', () => {
           setSelectedProvince({
@@ -260,7 +250,6 @@ const DropoutRateMap = () => {
         });
       }
     } else {
-      // Style default untuk provinsi yang tidak ada datanya
       if ('setStyle' in layer && typeof layer.setStyle === 'function') {
         layer.setStyle({
           fillColor: '#cccccc',

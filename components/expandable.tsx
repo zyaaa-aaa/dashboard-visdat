@@ -11,7 +11,7 @@ export function ExpandableKipkAnalysis() {
     <div className="space-y-4">
       {/* Clickable Header */}
       <div 
-        className=" bg-positive/30 border border-positive flex justify-between items-center gap-2 cursor-pointer hover:bg-positive/20 p-3 rounded-lg transition-colors w-full"
+        className=" border flex justify-between items-center gap-2 cursor-pointer hover:bg-positive/20 p-3 rounded-lg transition-colors w-full"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <h3 className="text-lg font-semibold text-muted-foreground">
